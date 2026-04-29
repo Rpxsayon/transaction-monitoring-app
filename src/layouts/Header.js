@@ -1,8 +1,0 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Button } from '@/app/components/ui/button';
-import { format } from 'date-fns';
-import { Menu, X, TrendingUp, LogOut } from 'lucide-react';
-;
-export default function Header({ username, loginTime, sidebarOpen, setSidebarOpen, onLogOut, }) {
-    return (_jsx("header", { className: "bg-white border-b border-gray-200 sticky top-0 z-40", children: _jsxs("div", { className: "px-4 lg:px-6 h-16 flex items-center justify-between", children: [_jsxs("div", { className: "flex items-center gap-4", children: [_jsx(Button, { variant: "ghost", size: "icon", className: "lg:hidden", onClick: () => setSidebarOpen(!sidebarOpen), children: sidebarOpen ? _jsx(X, { className: "h-5 w-5" }) : _jsx(Menu, { className: "h-5 w-5" }) }), _jsxs("div", { className: "flex items-center gap-2", children: [_jsx(TrendingUp, { className: "h-6 w-6 text-blue-600" }), _jsx("h1", { className: "text-lg font-semibold", children: "Transaction Monitor" })] })] }), _jsxs("div", { className: "flex items-center gap-4", children: [_jsxs("div", { className: "hidden md:flex flex-col items-end text-sm", children: [_jsx("span", { className: "font-medium text-gray-900", children: username }), loginTime && (_jsxs("span", { className: "text-xs text-gray-500", children: ["Login: ", format(new Date(loginTime), 'MMM dd, yyyy HH:mm')] }))] }), _jsxs(Button, { variant: "outline", size: "sm", onClick: onLogOut, className: "gap-2", children: [_jsx(LogOut, { className: "h-4 w-4" }), _jsx("span", { className: "hidden sm:inline", children: "Logout" })] })] })] }) }));
-}

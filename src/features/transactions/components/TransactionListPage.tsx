@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useState } from 'react';
 import {
     selectFilteredTransactions,
     selectTransactions,
@@ -41,6 +42,18 @@ export function TransactionListPage() {
     const allTransactions = useAppSelector(selectTransactions);
     const categories = useAppSelector(selectCategories);
     const filters = useAppSelector(selectFilters);
+
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 10;
+
+    const totalPages = Math.ceil(filteredTransactions.length / pageSize);
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const paginatedTransactions = filteredTransactions.slice(
+        startIndex,
+        startIndex + pageSize
+    );
 
     const hasActiveFilters =
         filters.status !== 'all' ||
@@ -251,7 +264,7 @@ export function TransactionListPage() {
                             </TableHeader>
 
                             <TableBody>
-                                {filteredTransactions.length === 0 ? (
+                                {paginatedTransactions.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={9}
                                             className="text-center py-10 text-gray-500 dark:text-gray-400">
@@ -259,7 +272,7 @@ export function TransactionListPage() {
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    filteredTransactions.map((txn) => (
+                                    paginatedTransactions.map((txn) => (
                                         <TableRow
                                             key={txn.id}
                                             className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
@@ -316,6 +329,37 @@ export function TransactionListPage() {
                     </div>
                 </CardContent>
             </Card>
+
+            {/* 🔥 Pagination UI */}
+            <div className="flex justify-between items-center">
+
+                <Button
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage(prev => prev - 1)}
+                >
+                    Previous
+                </Button>
+
+                <div className="flex gap-2">
+                    {Array.from({ length: totalPages }, (_, i) => (
+                        <Button
+                            key={i}
+                            variant={currentPage === i + 1 ? "default" : "outline"}
+                            onClick={() => setCurrentPage(i + 1)}
+                        >
+                            {i + 1}
+                        </Button>
+                    ))}
+                </div>
+
+                <Button
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage(prev => prev + 1)}
+                >
+                    Next
+                </Button>
+
+            </div>
         </div>
     );
 }
