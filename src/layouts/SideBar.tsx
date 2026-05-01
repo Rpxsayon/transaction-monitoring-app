@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation, Link } from 'react-router-dom';
-import { LayoutDashboard, ListFilter } from 'lucide-react';
+import { LayoutDashboard, ListFilter, TrendingUp, Users } from 'lucide-react';
 
 
 interface SidebarProps {
@@ -15,6 +15,8 @@ export default function SideBar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     const menuItems = [
         { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/transactions', label: 'Transactions', icon: ListFilter },
+        { path: '/analytics', label: 'Analytics', icon: TrendingUp },
+        { path: '/customers', label: 'Customers', icon: Users },
     ];
 
 
